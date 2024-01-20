@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class="text-8xl">SUPER</h1>
+<h1 class="text-8xl">MARS</h1>
+<h1 class="text-8xl mb-4">ARENA</h1>
+
+<%= link_to "New Game", new_arena_path, class: "btn btn-primary w-full mb-2 justify-start" %>
+
+<div id="arenas">
+  <% @arenas.each do |arena| %>
+    <%= link_to arena do %>
+      <%= render arena %>
+    <% end %>
+  <% end %>
+</div>

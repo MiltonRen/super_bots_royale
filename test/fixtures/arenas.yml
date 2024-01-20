@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: arenas
+#
+#  id         :bigint           not null, primary key
+#  concluded  :boolean
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  name: MyString
+  concluded: false
+
+two:
+  name: MyString
+  concluded: false

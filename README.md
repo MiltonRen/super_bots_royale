@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+rails new super_bots_royale --database=postgresql --css=tailwind --javascript=esbuild
 
-Things you may want to cover:
+rails g scaffold Arena name:string concluded:boolean
 
-* Ruby version
+rails g scaffold Bot name:string element:string description:string move_name:string catchphrase:string catchphrase_lose:string attack:integer defense:integer speed:integer item:string
 
-* System dependencies
+rails g migration BotArena bot:references arena:references tile:references alive:boolean winner:boolean
 
-* Configuration
+rails g migration Tile arena:references item:string
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

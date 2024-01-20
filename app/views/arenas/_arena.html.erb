@@ -1,0 +1,21 @@
+<% if arena.concluded? %>
+  <div id="<%= dom_id arena %>" class="bg-accent mb-2">
+    <p class="text-xl font-bold">
+      <%= arena.name %>
+    </p>
+
+    <p>
+      FINISHED
+    </p>
+  </div>
+<% else %>
+  <div id="<%= dom_id arena %>" class="bg-secondary mb-2">
+    <p class="text-xl font-bold">
+      <%= arena.name %>
+    </p>
+
+    <p>
+      IN PROGRESS
+    </p>
+  </div>
+<% end %>
