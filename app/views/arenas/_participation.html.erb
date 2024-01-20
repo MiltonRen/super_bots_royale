@@ -1,0 +1,14 @@
+<% style = participation.is_alive? ? "" : "grayscale opacity-50" %>
+
+<div id="<%= dom_id participation %>" class="flex flex-col w-24 relative mb-0.5">
+  <%= image_tag participation.bot.image_link, class: "w-full #{style}" %>
+  
+  <% unless participation.is_alive? %>
+    <i class="fa-solid fa-skull text-6xl text-white opacity-75 absolute top-4 left-4"></i>
+  <% end %>
+
+  <p class="text-xs font-bold bg-base-100 line-clamp-1 overflow-clip">
+    <%= participation.bot.name %>
+  </p>
+
+</div>

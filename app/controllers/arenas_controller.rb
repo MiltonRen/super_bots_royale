@@ -1,5 +1,5 @@
 class ArenasController < ApplicationController
-  before_action :set_arena, only: %i[ show edit update destroy ]
+  before_action :set_arena, only: %i[ show edit update destroy participate start ]
 
   # GET /arenas or /arenas.json
   def index
@@ -12,6 +12,11 @@ class ArenasController < ApplicationController
 
   # GET /arenas/new
   def new
+    if Arena.any? {|a| !a.concluded?}
+      redirect_to root_path, notice: "There is a game in progress!"
+      return
+    end
+
     @arena = Arena.new
   end
 
@@ -21,11 +26,16 @@ class ArenasController < ApplicationController
 
   # POST /arenas or /arenas.json
   def create
+    if Arena.any? {|a| !a.concluded?}
+      redirect_to root_path, notice: "There is a game in progress!"
+      return
+    end
+
     @arena = Arena.new(arena_params)
 
     respond_to do |format|
       if @arena.save
-        format.html { redirect_to arena_url(@arena), notice: "Arena was successfully created." }
+        format.html { redirect_to arena_url(@arena), notice: "Game was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -36,7 +46,7 @@ class ArenasController < ApplicationController
   def update
     respond_to do |format|
       if @arena.update(arena_params)
-        format.html { redirect_to arena_url(@arena), notice: "Arena was successfully updated." }
+        format.html { redirect_to arena_url(@arena), notice: "Game was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -49,6 +59,40 @@ class ArenasController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to arenas_url, notice: "Arena was successfully destroyed." }
+    end
+  end
+
+  # PATCH
+  def participate
+    if @arena.started?
+      redirect_to @arena, alert: "GAME ALREADY STARTED - WAIT FOR NEXT ROUND"
+      return
+    end
+
+    @bot = Bot.find(params[:bot_id])
+    @bot.check_for_image_generation!
+    if @bot.image_link.blank?
+      redirect_to @bot, alert: "YOU DON'T HAVE AN IMAGE YET!"
+      return
+    end
+
+    if Participation.find_by(bot: @bot, arena: @arena).present?
+      redirect_to @arena, notice: "RADICAL PARTICIPATION!"
+      return
+    end
+
+    p = Participation.create!(bot: @bot, arena: @arena)
+
+    respond_to do |format|
+      format.html { redirect_to @arena, notice: "RADICAL PARTICIPATION!" }
+    end
+  end
+
+  def start
+    @arena.update!(started: true)
+
+    respond_to do |format|
+      format.html { redirect_to @arena, notice: "GAME START!" }
     end
   end
 

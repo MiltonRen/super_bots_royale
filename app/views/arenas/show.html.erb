@@ -1,5 +1,19 @@
 <p style="color: green"><%= notice %></p>
 
-<p class="text-7xl flex flex-wrap font-bold bg-secondary w-full">
-  <%= @arena.name %>
-</p>
+<div class="flex w-full bg-secondary">
+  <p class="flex-grow line-clamp-1 overflow-clip text-7xl font-bold mb-2"><%= @arena.name %></p>
+  
+  <% if @arena.started? %>
+    <div class="btn btn-lg btn-primary text-2xl h-full py-6 flex-shrink-0 whitespace-nowrap">
+      <%= "#{@arena.participations.filter{|p| p.is_alive?}.count} / #{@arena.participations.count}" %>
+    </div>
+  <% else %>
+    <%= button_to "START >", start_arena_path(@arena), method: :patch, class: "btn btn-lg btn-primary text-2xl h-full flex-shrink-0 whitespace-nowrap" %>
+  <% end %>  
+</div>
+
+<div class="flex flex-wrap">
+  <% @arena.participations.each do |participation| %>
+    <%= render "arenas/participation", participation: participation %>
+  <% end %>
+</div>

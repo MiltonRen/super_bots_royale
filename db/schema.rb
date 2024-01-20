@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_20_082004) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_20_093411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_20_082004) do
     t.boolean "concluded"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "started"
   end
 
   create_table "bots", force: :cascade do |t|
@@ -37,6 +38,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_20_082004) do
     t.string "image_link"
     t.integer "luck"
     t.integer "unicycle"
+  end
+
+  create_table "participations", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.bigint "arena_id", null: false
+    t.string "item_holding"
+    t.boolean "is_alive"
+    t.boolean "is_winner"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["arena_id"], name: "index_participations_on_arena_id"
+    t.index ["bot_id"], name: "index_participations_on_bot_id"
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
@@ -132,6 +145,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_20_082004) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
+  add_foreign_key "participations", "arenas"
+  add_foreign_key "participations", "bots"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

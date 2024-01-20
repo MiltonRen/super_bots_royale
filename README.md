@@ -9,9 +9,11 @@ rails g scaffold Bot name:string element:string description:string move_name:str
 rails g migration add_eden_stuff_to_bots image_task_id:string image_link:string
 rails g migration add_fun_stats_to_bots luck:integer unicycle:integer
 
+rails g model Participation bot:references arena:references item_holding:string is_alive:boolean is_winner:boolean
+
+rails g migration add_started_to_arenas started:boolean
+
 TODO:
 
-rails g migration BotArena bot:references arena:references tile:references item:string alive:boolean winner:boolean
-
-rails g migration Tile arena:references item:string
-
+rails g model Tile arena:references item:string
+rails g migration add_tile_to_participations tile:references

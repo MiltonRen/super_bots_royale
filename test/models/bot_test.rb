@@ -10,9 +10,11 @@
 #  description      :string
 #  element          :string
 #  image_link       :string
+#  luck             :integer
 #  move_name        :string
 #  name             :string
 #  speed            :integer
+#  unicycle         :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  image_task_id    :string
