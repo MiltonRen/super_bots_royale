@@ -24,7 +24,7 @@
         <% if @bot.attack > 750 %>
           <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.attack %></span>
         <% elsif @bot.attack > 500 %>
-          <span class="text-success"><%= @bot.attack %></span>
+          <span class="text-amber-600"><%= @bot.attack %></span>
         <% else %>
           <%= @bot.attack %>
         <% end %>
@@ -36,7 +36,7 @@
         <% if @bot.defense > 750 %>
           <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.defense %></span>
         <% elsif @bot.defense > 500 %>
-          <span class="text-success"><%= @bot.defense %></span>
+          <span class="text-amber-600"><%= @bot.defense %></span>
         <% else %>
           <%= @bot.defense %>
         <% end %>
@@ -48,7 +48,7 @@
         <% if @bot.speed > 750 %>
           <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.speed %></span>
         <% elsif @bot.speed > 500 %>
-          <span class="text-success"><%= @bot.speed %></span>
+          <span class="text-amber-600"><%= @bot.speed %></span>
         <% else %>
           <%= @bot.speed %>
         <% end %>
@@ -60,7 +60,7 @@
         <% if @bot.luck > 750 %>
           <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.luck %></span>
         <% elsif @bot.luck > 500 %>
-          <span class="text-success"><%= @bot.luck %></span>
+          <span class="text-amber-600"><%= @bot.luck %></span>
         <% else %>
           <%= @bot.luck %>
         <% end %>
@@ -72,7 +72,7 @@
         <% if @bot.unicycle > 750 %>
           <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.unicycle %></span>
         <% elsif @bot.unicycle > 500 %>
-          <span class="text-success"><%= @bot.unicycle %></span>
+          <span class="text-amber-600"><%= @bot.unicycle %></span>
         <% else %>
           <%= @bot.unicycle %>
         <% end %>

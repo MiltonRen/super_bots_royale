@@ -1,15 +1,24 @@
 <p style="color: green"><%= notice %></p>
 
-<h1 class="text-8xl">SUPER</h1>
-<h1 class="text-8xl">MARS</h1>
-<h1 class="text-8xl mb-4">ARENA</h1>
-
-<div class="flex justify-between w-full">
-  <%= link_to "Make a Bot", new_bot_path, class: "btn btn-primary mb-2 justify-start flex-grow" %>
-  <%= link_to "Find my Bot", bots_path, class: "btn mb-2 justify-start flex-grow" %>
+<div class="flex flex-col p-2">
+  <i class="fa-solid fa-wifi text-5xl animate-pulse"></i>
+  <i class="fa-solid fa-robot text-5xl -mt-2"></i>
 </div>
 
-<%= link_to "Start a New Game", new_arena_path, class: "btn btn-warning w-full mb-16 justify-start hover:bg-amber-500 transition duration-100" %>
+<div class="mt-40">
+  <h1 class="text-7xl">SUPER!</h1>
+  <h1 class="text-7xl">MARS</h1>
+  <h1 class="text-7xl mb-4">ROYALE</h1>
+</div>
+
+<div class="max-w-96">
+  <div class="flex justify-between w-full">
+    <%= link_to "Make a Bot", new_bot_path, class: "btn btn-primary mb-2 justify-start flex-grow" %>
+    <%= link_to "Find my Bot", bots_path, class: "btn mb-2 justify-start flex-grow" %>
+  </div>
+
+  <%= link_to "Start a New Game", new_arena_path, class: "btn btn-warning w-full mb-16 justify-start hover:bg-amber-500 transition duration-100" %>
+</div>
 
 <p class="text-4xl mb-2 ml-2">Games</p>
 <div id="arenas">

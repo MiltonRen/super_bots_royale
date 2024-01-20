@@ -17,6 +17,6 @@
 
   <body class="mb-32">
     <%= yield %>
-    <%= render "shared/home_button" %>
+    <%= render "shared/home_button" unless request.original_url == root_url %>
   </body>
 </html>
