@@ -1,0 +1,11 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class="text-8xl mb-4">BOTS</h1>
+
+<div id="bots">
+  <% @bots.each do |bot| %>
+    <%= link_to bot do %>
+      <%= render bot %>
+    <% end %>
+  <% end %>
+</div>

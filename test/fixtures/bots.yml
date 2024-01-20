@@ -1,0 +1,39 @@
+# == Schema Information
+#
+# Table name: bots
+#
+#  id               :bigint           not null, primary key
+#  attack           :integer
+#  catchphrase      :string
+#  catchphrase_lose :string
+#  defense          :integer
+#  description      :string
+#  element          :string
+#  move_name        :string
+#  name             :string
+#  speed            :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
+one:
+  name: MyString
+  element: MyString
+  description: MyString
+  move_name: MyString
+  catchphrase: MyString
+  catchphrase_lose: MyString
+  attack: 1
+  defense: 1
+  speed: 1
+
+two:
+  name: MyString
+  element: MyString
+  description: MyString
+  move_name: MyString
+  catchphrase: MyString
+  catchphrase_lose: MyString
+  attack: 1
+  defense: 1
+  speed: 1

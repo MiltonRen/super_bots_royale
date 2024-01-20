@@ -4,7 +4,12 @@
 <h1 class="text-8xl">MARS</h1>
 <h1 class="text-8xl mb-4">ARENA</h1>
 
-<%= link_to "New Game", new_arena_path, class: "btn btn-primary w-full mb-2 justify-start" %>
+<div class="flex justify-between w-full">
+  <%= link_to "Make a Bot", new_bot_path, class: "btn btn-primary mb-2 justify-start flex-grow" %>
+  <%= link_to "Find my Bot", bots_path, class: "btn mb-2 justify-start flex-grow" %>
+</div>
+
+<%= link_to "Start a New Game", new_arena_path, class: "btn btn-warning w-full mb-2 justify-start" %>
 
 <div id="arenas">
   <% @arenas.each do |arena| %>

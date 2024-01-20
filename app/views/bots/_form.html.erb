@@ -1,0 +1,43 @@
+<%= form_with(model: bot) do |form| %>
+  <% if bot.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(bot.errors.count, "error") %> prohibited this bot from being saved:</h2>
+
+      <ul>
+        <% bot.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name, class: "w-full input bg-white", placeholder: "Wubba" %>
+  </div>
+
+  <div>
+    <%= form.label :element, style: "display: block" %>
+    <%= form.select :element, options_for_select(Bot::ELEMENTS.collect{|element| [element, element]}) %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description, rows:4, class: "w-full textarea bg-white", placeholder: "A celestial, flying Pokémon with shimmering, aurora-colored wings and a feathered body. In battle, Wabba wields star energy for powerful light attacks and confuses foes with shimmering illusions." %>
+  </div>
+
+  <div>
+    <%= form.label :my_super_move, style: "display: block" %>
+    <%= form.text_field :move_name, class: "w-full input bg-white", placeholder: "G-Max Chi Strike" %>
+  </div>
+
+  <div>
+    <%= form.label :my_catchphrase, style: "display: block" %>
+    <%= form.text_field :catchphrase, class: "w-full input bg-white", placeholder: "wubba lubba dub dub!" %>
+  </div>
+
+  <div>
+    <%= form.submit "MAKE BOT", class: "btn btn-primary w-full justify-start mt-4" %>
+  </div>
+<% end %>
+

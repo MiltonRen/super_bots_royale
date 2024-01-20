@@ -6,6 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%# Replace this with your FontAwesome Pro Kit code %>
+    <script defer src="https://kit.fontawesome.com/0e5ab6a736.js" crossorigin="anonymous"></script>
+
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -14,5 +17,6 @@
 
   <body>
     <%= yield %>
+    <%= render "shared/home_button" %>
   </body>
 </html>
