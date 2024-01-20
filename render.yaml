@@ -1,0 +1,43 @@
+databases:
+  - name: MARS-prod-postgres
+    region: oregon
+    ipAllowList: [] # only allow internal connections
+    plan: free
+
+services:
+  - type: web
+    name: MARS-prod-web
+    repo: https://github.com/MiltonRen/temple
+    runtime: ruby
+    region: oregon
+    buildCommand: "./bin/render-build.sh"
+    startCommand: bundle exec rails s -e production
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: MARS-prod-postgres
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: MALLOC_ARENA_MAX
+        value: 2 # renduce memory usage, https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
+      - key: WEB_CONCURRENCY
+        value: 2
+    plan: starter
+
+  - type: worker
+    name: MARS-prod-worker
+    runtime: ruby
+    region: oregon
+    buildCommand: "./bin/render-build.sh"
+    startCommand: bundle exec rake solid_queue:start -e production
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: MARS-prod-postgres
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: MALLOC_ARENA_MAX
+        value: 2 # renduce memory usage, https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
+    plan: starter # no free option for bg workers

@@ -18,7 +18,9 @@
 
   <div>
     <%= form.label :element, style: "display: block" %>
-    <%= form.select :element, options_for_select(Bot::ELEMENTS.collect{|element| [element, element]}) %>
+    <div class="ml-4">
+      <%= form.select :element, options_for_select(Bot::ELEMENTS.collect{|element| [element, element]}) %>
+    </div>
   </div>
 
   <div>

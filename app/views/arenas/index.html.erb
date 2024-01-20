@@ -9,8 +9,9 @@
   <%= link_to "Find my Bot", bots_path, class: "btn mb-2 justify-start flex-grow" %>
 </div>
 
-<%= link_to "Start a New Game", new_arena_path, class: "btn btn-warning w-full mb-2 justify-start" %>
+<%= link_to "Start a New Game", new_arena_path, class: "btn btn-warning w-full mb-16 justify-start hover:bg-amber-500 transition duration-100" %>
 
+<p class="text-4xl mb-2 ml-2">Games</p>
 <div id="arenas">
   <% @arenas.each do |arena| %>
     <%= link_to arena do %>

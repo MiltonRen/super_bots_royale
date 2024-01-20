@@ -4,10 +4,12 @@ class BotsController < ApplicationController
   # GET /bots or /bots.json
   def index
     @bots = Bot.all
+    @bots.each {|bot| bot.check_for_image_generation! }
   end
 
   # GET /bots/1 or /bots/1.json
   def show
+    @bot.check_for_image_generation!
   end
 
   # GET /bots/new

@@ -1,6 +1,18 @@
-<div id="<%= dom_id bot %>" class="bg-base-200 mb-2 p-4 flex justify-between items-center">
-  <p class="text-xl font-bold">
-    <%= bot.name %>
-  </p>
-  <i class="fa-solid fa-caret-right text-xl"></i>
+<div id="<%= dom_id bot %>" class="bg-base-200 mb-2 p-4 flex justify-start items-center gap-x-4 hover:bg-base-300 transition duration-150">
+  <% if bot.image_link.present? %>
+    <%= image_tag bot.image_link, class: "w-24" %>
+  <% else %>
+    <div class="flex justify-center items-center h-24 w-24">
+      <i class="fa-solid fa-spinner text-6xl animate-spin text-primary"></i>
+    </div>
+  <% end %>
+
+  <div>
+    <p class="text-xl font-bold">
+      <%= bot.name %>
+    </p>
+    <p class="text-xl font-bold italic opacity-50">
+      "<%= bot.catchphrase %>"
+    </p>
+  </div>
 </div>

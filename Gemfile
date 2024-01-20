@@ -46,6 +46,8 @@ gem "bootsnap", require: false
 
 gem "ruby-openai", "~> 6.3"
 
+gem "solid_queue"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

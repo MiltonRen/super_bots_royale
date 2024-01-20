@@ -1,50 +1,108 @@
 <p style="color: green"><%= notice %></p>
 
-<p class="text-7xl flex flex-wrap font-bold bg-secondary w-full mb-4 overflow-clip">
+<p class="text-7xl flex flex-wrap font-bold bg-secondary w-full sm:mb-4 pb-2 overflow-clip">
   <%= @bot.name %>
 </p>
 
-<p class="mb-4">
-  <strong class="w-full bg-base-200">Element</strong>
-  <br>
-  <%= @bot.element %>
-</p>
+<div class="sm:flex sm:gap-4">
 
-<p class="mb-4">
-  <strong class="w-full bg-base-200">Description</strong>
-  <br>
-  <%= @bot.description %>
-</p>
+  <div class="w-full mb-4 sm:mb-0 sm:w-80 sm:h-80">
+    <% if @bot.image_link.present? %>
+      <%= image_tag @bot.image_link, class: "w-full" %>
+    <% else %>
+      <div class="w-full h-full flex justify-center items-center">
+        <i class="fa-solid fa-spinner text-[12rem] animate-spin text-primary"></i>
+      </div>
+    <% end %>
+  </div>
 
-<p class="mb-4">
-  <strong class="w-full bg-base-200">Super Move</strong>
-  <br>
-  <%= @bot.move_name %>
-</p>
+  <div class="sm:max-w-[34rem]">
+    <div class="flex justify-start gap-x-4 overflow-scroll p-4 sm:p-0">
+      <div class="flex flex-col border-4 border-base-200 min-w-24">
+        <p class="w-full bg-base-200">Attack</p>
 
-<p>
-  <strong class="w-full bg-base-200">Catchphrase</strong>
-</p>
-<label class="swap mb-4">
-  <input type="checkbox" />
-  <div class="swap-on"><%= @bot.catchphrase %><i class="fa-solid fa-rotate ml-2 text-primary"></i></div>
-  <div class="swap-off"><%= @bot.catchphrase_lose %><i class="fa-solid fa-rotate ml-2 text-primary"></i></div>
-</label>
+        <% if @bot.attack > 750 %>
+          <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.attack %></span>
+        <% elsif @bot.attack > 500 %>
+          <span class="text-success"><%= @bot.attack %></span>
+        <% else %>
+          <%= @bot.attack %>
+        <% end %>
+      </div>
 
-<p class="mb-4">
-  <strong class="w-full bg-base-200">Attack</strong>
-  <br>
-  <%= @bot.attack %>
-</p>
+      <div class="flex flex-col border-4 border-base-200 min-w-24">
+        <p class="w-full bg-base-200">defense</p>
 
-<p class="mb-4">
-  <strong class="w-full bg-base-200">Defense</strong>
-  <br>
-  <%= @bot.defense %>
-</p>
+        <% if @bot.defense > 750 %>
+          <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.defense %></span>
+        <% elsif @bot.defense > 500 %>
+          <span class="text-success"><%= @bot.defense %></span>
+        <% else %>
+          <%= @bot.defense %>
+        <% end %>
+      </div>
 
-<p class="mb-4">
-  <strong class="w-full bg-base-200">Speed</strong>
-  <br>
-  <%= @bot.speed %>
-</p>
+      <div class="flex flex-col border-4 border-base-200 min-w-24">
+        <p class="w-full bg-base-200">speed</p>
+
+        <% if @bot.speed > 750 %>
+          <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.speed %></span>
+        <% elsif @bot.speed > 500 %>
+          <span class="text-success"><%= @bot.speed %></span>
+        <% else %>
+          <%= @bot.speed %>
+        <% end %>
+      </div>
+
+      <div class="flex flex-col border-4 border-base-200 min-w-24">
+        <p class="w-full bg-base-200">luck</p>
+
+        <% if @bot.luck > 750 %>
+          <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.luck %></span>
+        <% elsif @bot.luck > 500 %>
+          <span class="text-success"><%= @bot.luck %></span>
+        <% else %>
+          <%= @bot.luck %>
+        <% end %>
+      </div>
+
+      <div class="flex flex-col border-4 border-base-200 min-w-24">
+        <p class="w-full bg-base-200">unicycle</p>
+
+        <% if @bot.unicycle > 750 %>
+          <span class="text-error"><i class="fa-solid fa-star text-xs"></i><%= @bot.unicycle %></span>
+        <% elsif @bot.unicycle > 500 %>
+          <span class="text-success"><%= @bot.unicycle %></span>
+        <% else %>
+          <%= @bot.unicycle %>
+        <% end %>
+      </div>
+    </div>
+
+    <p class="mb-4">
+      <p class="w-full bg-base-200">Element</p>
+      <p class="ml-4 sm:ml-0"><%= @bot.element %></p>
+    </p>
+
+    <p class="mb-4">
+      <p class="w-full bg-base-200">About</p>
+      <p class="ml-4 sm:ml-0"><%= @bot.description %></p>
+    </p>
+
+    <p class="mb-4">
+      <p class="w-full bg-base-200">Super Move</p>
+      <p class="ml-4 sm:ml-0"><%= @bot.move_name %></p>
+    </p>
+
+    <p class="mb-4">
+      <p class="w-full bg-base-200">Catchphrase</p>
+      <label class="swap mb-4 ml-4 sm:ml-0">
+        <input type="checkbox" />
+        <div class="swap-on flex justify-start gap-x-2 items-center mr-8"><p><%= @bot.catchphrase_lose %></p><i class="fa-solid fa-rotate ml-2 text-primary"></i></div>
+        <div class="swap-off flex justify-start gap-x-2 items-center mr-8"><p><%= @bot.catchphrase %></p><i class="fa-solid fa-rotate ml-2 text-primary"></i></div>
+      </label>
+    </p>
+
+  </div>
+
+</div>
