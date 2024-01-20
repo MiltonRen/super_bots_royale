@@ -16,6 +16,7 @@
 #  updated_at       :datetime         not null
 #
 class Bot < ApplicationRecord
+  include Gptable
 
   ELEMENTS = %w[Normal Fire Water Electric Grass Ice Fighting Poison Ground Flying Psychic Bug Rock Ghost Dragon Dark Steel Fairy]
 
@@ -28,6 +29,7 @@ class Bot < ApplicationRecord
     self.attack = random_stat
     self.defense = random_stat
     self.speed = random_stat
+    self.catchphrase_lose = gpt_response("Come up with a losing catchphrase of my new fictional character from its regular catchphrase: #{catchphrase}")
   end
 
   private

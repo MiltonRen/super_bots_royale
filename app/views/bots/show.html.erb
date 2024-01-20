@@ -22,11 +22,14 @@
   <%= @bot.move_name %>
 </p>
 
-<p class="mb-4">
+<p>
   <strong class="w-full bg-base-200">Catchphrase</strong>
-  <br>
-  <%= @bot.catchphrase %>
 </p>
+<label class="swap mb-4">
+  <input type="checkbox" />
+  <div class="swap-on"><%= @bot.catchphrase %><i class="fa-solid fa-rotate ml-2 text-primary"></i></div>
+  <div class="swap-off"><%= @bot.catchphrase_lose %><i class="fa-solid fa-rotate ml-2 text-primary"></i></div>
+</label>
 
 <p class="mb-4">
   <strong class="w-full bg-base-200">Attack</strong>
