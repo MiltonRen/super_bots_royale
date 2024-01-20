@@ -1,9 +1,9 @@
 class ArenasController < ApplicationController
-  before_action :set_arena, only: %i[ show edit update destroy participate start ]
+  before_action :set_arena, only: %i[ show edit update destroy participate start conclude ]
 
   # GET /arenas or /arenas.json
   def index
-    @arenas = Arena.all
+    @arenas = Arena.all.order(id: :desc)
   end
 
   # GET /arenas/1 or /arenas/1.json
@@ -64,15 +64,20 @@ class ArenasController < ApplicationController
 
   # PATCH
   def participate
+    if @arena.concluded?
+      redirect_to root_path, notice: "GAME ALREADY CONCLUDED - START A NEW ONE!"
+      return
+    end
+
     if @arena.started?
-      redirect_to @arena, alert: "GAME ALREADY STARTED - WAIT FOR NEXT ROUND"
+      redirect_to @arena, notice: "GAME ALREADY STARTED - WAIT FOR NEXT ROUND!"
       return
     end
 
     @bot = Bot.find(params[:bot_id])
     @bot.check_for_image_generation!
     if @bot.image_link.blank?
-      redirect_to @bot, alert: "YOU DON'T HAVE AN IMAGE YET!"
+      redirect_to @bot, notice: "YOU DON'T HAVE AN IMAGE YET!"
       return
     end
 
@@ -89,10 +94,32 @@ class ArenasController < ApplicationController
   end
 
   def start
-    @arena.update!(started: true)
+    tiles = []
+    (1..100).each do |count|
+      tiles << Tile.new(arena: @arena, number: count, item: Item.random_item_or_nothing)
+    end
+
+    participations = @arena.participations
+    participations.each do |participation|
+      participation.tile = tiles.sample
+    end
 
     respond_to do |format|
+      ApplicationRecord.transaction do
+        tiles.each {|tile| tile.save!}
+        participations.each {|participation| participation.save!}
+        @arena.update!(started: true)
+      end
       format.html { redirect_to @arena, notice: "GAME START!" }
+    rescue
+      format.html { redirect_to @arena, notice: "ERROR! MILTON DEBUG" }
+    end
+  end
+
+  def conclude
+    respond_to do |format|
+      @arena.update!(concluded: true)
+      format.html { redirect_to root_path, notice: "GAME CONCLUDED!" }
     end
   end
 

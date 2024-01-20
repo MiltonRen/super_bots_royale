@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :arenas do
     patch :participate, on: :member
     patch :start, on: :member
+    patch :conclude, on: :member
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

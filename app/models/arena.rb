@@ -12,6 +12,7 @@
 class Arena < ApplicationRecord
 
   has_many :participations
+  has_many :tiles
 
   validates_length_of :name, minimum: 3, maximum: 100
 
