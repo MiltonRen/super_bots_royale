@@ -3,6 +3,7 @@
 # Table name: tiles
 #
 #  id         :bigint           not null, primary key
+#  bg         :string
 #  item       :string
 #  number     :integer
 #  created_at :datetime         not null
@@ -20,6 +21,10 @@
 class Tile < ApplicationRecord
   has_many :participations
   belongs_to :arena
+
+  before_create do
+    self.bg = ["bg-base-100", "bg-base-200", "bg-base-300"].sample
+  end
 
   def neighbors
     if number == 1

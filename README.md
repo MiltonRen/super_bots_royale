@@ -26,7 +26,7 @@ rails g migration add_stats_to_participation attack:integer defense:integer spee
 
 rails g migration make_battle_log_bot_empty_ok
 
-
+rails g migration add_bg_to_tiles bg:string
 
 
 CONTROLLER GOOD

@@ -1,15 +1,15 @@
 <% alive_p = tile.participations.filter {|p| p.is_alive?} %>
 
-<div id="<%= dom_id tile %>" class="flex w-8 h-8 sm:w-12 sm:h-12 bg-base-200 relative rounded-lg">
+<div id="<%= dom_id tile %>" class="flex w-8 h-8 sm:w-12 sm:h-12 <%= tile.bg %> relative rounded-lg">
   <% if alive_p.count > 1 %>
     <% alive_p.each do |p| %>
       <%= image_tag p.bot.image_link, class: "w-4 h-4 sm:w-6 sm:h-6 rounded-lg" %>
     <% end %>
   <% else %>
     <% alive_p.each do |p| %>
-      <%= image_tag p.bot.image_link, class: "rounded-lg" %>
+      <%= image_tag p.bot.image_link, class: "rounded-lg animate-jump-small" %>
     <% end %>
   <% end %>
 
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl sm:text-3xl font-extrabold text-white z-50"><%= tile.item %></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl sm:text-3xl font-extrabold text-white z-50 animate-pulse"><%= tile.item %></div>
 </div>

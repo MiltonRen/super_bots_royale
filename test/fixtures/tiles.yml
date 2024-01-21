@@ -3,6 +3,7 @@
 # Table name: tiles
 #
 #  id         :bigint           not null, primary key
+#  bg         :string
 #  item       :string
 #  number     :integer
 #  created_at :datetime         not null

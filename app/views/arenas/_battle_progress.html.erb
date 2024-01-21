@@ -1,9 +1,5 @@
 <div id="battle_progress">
   
-  <% if arena.concluded? %>
-    <div data-controller="reward-animator"></div>
-  <% end %>
-  
   <div class="flex w-full bg-secondary">
     <p class="flex-grow line-clamp-1 overflow-clip text-7xl font-bold mb-2"><%= arena.name %></p>
     <% if arena.started? %>
@@ -44,6 +40,16 @@
         (if you made a new bot, refresh the page until the image is generated for it!)
         <br>
         <br>
+        
+        <div class="mb-8">
+          <%= link_to bots_path, class: "btn btn-lg" do %>
+            Add an existing bot
+          <% end %>
+          <%= link_to new_bot_path, class: "btn btn-lg" do %>
+            Make a new bot
+          <% end %>
+        </div>
+
 
         <% if arena.participations.count > 0 %>
           Participants:
@@ -97,4 +103,12 @@
       <% end %>      
     </div>
   </div>
+
+  <% if arena.concluded? %>
+    <div data-controller="reward-animator" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <%= link_to root_path, class: "btn btn-lg btn-primary text-5xl z-50 h-32 w-64 text-white" do %>
+        < HOME
+      <% end %>
+    </div>
+  <% end %>
 </div>
