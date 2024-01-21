@@ -1,37 +1,7 @@
+<%= turbo_stream_from "#{dom_id(@arena)}_messages_stream" %>
+
 <p style="color: green"><%= notice %></p>
 
-<div class="flex w-full bg-secondary">
-  <p class="flex-grow line-clamp-1 overflow-clip text-7xl font-bold mb-2"><%= @arena.name %></p>
-
-  <% if @arena.started? %>
-    <div class="btn btn-lg btn-primary text-2xl h-full py-6 flex-shrink-0 whitespace-nowrap">
-      <%= "#{@arena.participations.filter{|p| p.is_alive?}.count} / #{@arena.participations.count}" %>
-    </div>
-    <% unless @arena.concluded? %>
-      <%= button_to "X", conclude_arena_path(@arena), method: :patch, form: { data: { turbo_confirm: "END GAME PREMATURELY?" } }, class: "btn btn-xs btn-secondary text-2xl h-full flex-shrink-0" %>
-    <% end %>
-  <% else %>
-    <% if @arena.participations.count >= 2 %>
-      <%= button_to "START >", start_arena_path(@arena), method: :patch, class: "btn btn-lg btn-primary text-2xl h-full flex-shrink-0 whitespace-nowrap" %>
-    <% end %>    
-  <% end %>  
-</div>
-
-
-<% if @arena.started? %>
-  <div class="grid grid-cols-10 gap-2 sm:gap-4 justify-items-center w-fit mt-4 mb-4">
-    <% @arena.tiles.order(number: :asc).each do |tile| %>
-      <%= render "arenas/tile", tile: tile %>
-    <% end %>
-  </div>
-<% else %>
-  TO JOIN: GO TO YOUR BOT OR MAKE A NEW ONE -> CLICK "JOIN GAME"
-  <br>
-  2 bots are required to start the game  
-<% end %>
-
-<div class="flex flex-wrap mb-8">
-  <% @arena.participations.each do |participation| %>
-    <%= render "arenas/participation", participation: participation %>
-  <% end %>
+<div data-controller="bgm">
+  <%= render "arenas/battle_progress", arena: @arena %>
 </div>

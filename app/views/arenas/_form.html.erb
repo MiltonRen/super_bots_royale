@@ -1,4 +1,4 @@
-<%= form_with(model: arena) do |form| %>
+<%= form_with(model: arena, class: "max-w-sm") do |form| %>
   <% if arena.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(arena.errors.count, "error") %> prohibited this arena from being saved:</h2>

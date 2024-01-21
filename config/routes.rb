@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     patch :participate, on: :member
     patch :start, on: :member
     patch :conclude, on: :member
+    patch :unblock, on: :member
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

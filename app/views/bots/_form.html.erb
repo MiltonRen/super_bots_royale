@@ -1,4 +1,4 @@
-<%= form_with(model: bot) do |form| %>
+<%= form_with(model: bot, class: "max-w-sm") do |form| %>
   <% if bot.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(bot.errors.count, "error") %> prohibited this bot from being saved:</h2>

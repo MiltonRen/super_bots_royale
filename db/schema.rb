@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_20_203735) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_20_230040) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_20_203735) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "started"
+  end
+
+  create_table "battle_logs", force: :cascade do |t|
+    t.bigint "arena_id", null: false
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "bot_id"
+    t.index ["arena_id"], name: "index_battle_logs_on_arena_id"
+    t.index ["bot_id"], name: "index_battle_logs_on_bot_id"
   end
 
   create_table "bots", force: :cascade do |t|
@@ -49,6 +59,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_20_203735) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "tile_id"
+    t.integer "attack"
+    t.integer "defense"
+    t.integer "speed"
+    t.integer "luck"
+    t.integer "unicycle"
     t.index ["arena_id"], name: "index_participations_on_arena_id"
     t.index ["bot_id"], name: "index_participations_on_bot_id"
     t.index ["tile_id"], name: "index_participations_on_tile_id"
@@ -156,6 +171,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_20_203735) do
     t.index ["arena_id"], name: "index_tiles_on_arena_id"
   end
 
+  add_foreign_key "battle_logs", "arenas"
+  add_foreign_key "battle_logs", "bots"
   add_foreign_key "participations", "arenas"
   add_foreign_key "participations", "bots"
   add_foreign_key "participations", "tiles"

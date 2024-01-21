@@ -1,5 +1,7 @@
 class ArenasController < ApplicationController
-  before_action :set_arena, only: %i[ show edit update destroy participate start conclude ]
+  include Gptable
+
+  before_action :set_arena, only: %i[ show edit update destroy participate start conclude unblock ]
 
   # GET /arenas or /arenas.json
   def index
@@ -109,8 +111,9 @@ class ArenasController < ApplicationController
         tiles.each {|tile| tile.save!}
         participations.each {|participation| participation.save!}
         @arena.update!(started: true)
+        PlayGameJob.set(wait: 1.second).perform_later(@arena.id)
       end
-      format.html { redirect_to @arena, notice: "GAME START!" }
+      format.html { redirect_to @arena }
     rescue
       format.html { redirect_to @arena, notice: "ERROR! MILTON DEBUG" }
     end
@@ -121,6 +124,17 @@ class ArenasController < ApplicationController
       @arena.update!(concluded: true)
       format.html { redirect_to root_path, notice: "GAME CONCLUDED!" }
     end
+  end
+
+  def unblock
+    unless @arena.concluded?
+      PlayGameJob.perform_later(@arena.id)
+    end
+
+    ## MANUAL
+    # return if @arena.concluded?
+    # perform
+    # redirect_to @arena
   end
 
   private

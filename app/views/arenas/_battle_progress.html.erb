@@ -1,0 +1,100 @@
+<div id="battle_progress">
+  
+  <% if arena.concluded? %>
+    <div data-controller="reward-animator"></div>
+  <% end %>
+  
+  <div class="flex w-full bg-secondary">
+    <p class="flex-grow line-clamp-1 overflow-clip text-7xl font-bold mb-2"><%= arena.name %></p>
+    <% if arena.started? %>
+      <%= button_to unblock_arena_path(arena), method: :patch, form: { data: { turbo_confirm: "if game is stuck, use this button to unstuck it"}}, class: "btn btn-lg btn-primary text-2xl h-full py-6 flex-shrink-0 whitespace-nowrap" do %>
+        <%= "#{arena.participations.filter{|p| p.is_alive?}.count} / #{arena.participations.count}" %>
+      <% end %>
+
+      <% unless arena.concluded? %>
+        <%= button_to "X", conclude_arena_path(arena), method: :patch, form: { data: { turbo_confirm: "END GAME PREMATURELY?" } }, class: "btn btn-xs btn-secondary text-2xl h-full flex-shrink-0" %>
+      <% end %>
+    <% else %>
+      <% if arena.participations.count >= 2 %>
+        <%= button_to "START >", start_arena_path(arena), method: :patch, class: "btn btn-lg btn-primary text-2xl h-full flex-shrink-0 whitespace-nowrap", form: { data: {action: "click->bgm#play"} } %>
+      <% end %>    
+    <% end %>  
+  </div>
+
+  <div class="sm:flex justify-start gap-x-4 ml-2 sm:ml-4">
+    <div class="flex-shrink-0">
+      <% if arena.started? %>
+        <div class="grid grid-cols-10 gap-1 sm:gap-2 justify-items-center w-fit mt-4 mb-4 mx-auto">
+          <% arena.tiles.order(number: :asc).each do |tile| %>
+            <%= render "arenas/tile", tile: tile %>
+          <% end %>
+        </div>
+      <% else %>
+        2 bots are required for this game to start
+        <br>
+        How to join:
+        <br>
+        <br>
+        -> HOME
+        <br>
+        -> GO TO YOUR BOT OR MAKE A NEW ONE
+        <br>
+        -> CLICK "JOIN GAME"
+        <br>
+        (if you made a new bot, refresh the page until the image is generated for it!)
+        <br>
+        <br>
+
+        <% if arena.participations.count > 0 %>
+          Participants:
+        <% end %>
+        <br>
+      <% end %>
+
+      <div class="grid grid-cols-4 mr-2 sm:mr-0 sm:grid-cols-5 gap-2 sm:gap-4 max-w-[34rem] justify-items-center w-fit mb-8">
+        <% arena.participations.each do |participation| %>
+          <%= render "arenas/participation", participation: participation %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <% logs = arena.battle_logs.order(id: :desc).first(24) %>
+      
+      <% if logs.first&.message&.include?("😃 Picked up") %>
+        <div data-controller="acquire"></div>
+      <% end %>
+
+      <% if logs.first&.message&.include?("💣 Sudden Duel!") || logs.first&.message&.include?("👊🏻 Fated Duel begins!")  %>
+        <div data-controller="shofar"></div>
+      <% end %>
+      <% logs.each do |log| %>
+        <div class="flex justify-start items-top gap-x-2 mb-4">
+          
+          <% if log.bot.present? %>
+            <%= image_tag log.bot.image_link, class: "w-10 h-10 rounded-lg" %>
+          <% else %>
+            <div class="w-10 h-10 rounded-lg bg-accent">
+              <div class="flex flex-col p-2 pt-0">
+                <i class="fa-solid fa-wifi text-sm ml-0.5 text-white animate-pulse"></i>
+                <i class="fa-solid fa-robot text-lg text-white -mt-2"></i>
+              </div>
+            </div>
+          <% end %>
+
+          <p class="h-full">
+            <%= log.message %>
+          </p>
+        </div>
+      <% end %>
+      
+      <% if arena.started? %>
+        <% if logs.blank? %>
+          <p class="text-xl ml-2">Game starting in a few seconds...</p>
+        <% else %>
+          <p class="text-xl ml-2">...</p>          
+        <% end %>      
+      <% end %>      
+    </div>
+  </div>
+</div>

@@ -51,6 +51,10 @@ class Bot < ApplicationRecord
   rescue
   end
 
+  def power
+    attack + defense + speed + luck + unicycle
+  end
+
   private
 
   def random_stat

@@ -1,39 +1,10 @@
-# README
+class PlayGameJob < ApplicationJob
+  include Gptable
 
-rails new super_bots_royale --database=postgresql --css=tailwind --javascript=esbuild
+  queue_as :default
 
-rails g scaffold Arena name:string concluded:boolean
-
-rails g scaffold Bot name:string element:string description:string move_name:string catchphrase:string catchphrase_lose:string attack:integer defense:integer speed:integer
-
-rails g migration add_eden_stuff_to_bots image_task_id:string image_link:string
-
-rails g migration add_fun_stats_to_bots luck:integer unicycle:integer
-
-rails g model Participation bot:references arena:references item_holding:string is_alive:boolean is_winner:boolean
-
-rails g migration add_started_to_arenas started:boolean
-
-rails g model Tile arena:references item:string
-
-rails g migration add_tile_to_participations tile:references
-
-rails g migration add_number_to_tiles number:integer
-
-rails g model BattleLog arena:references bot:references message:string
-
-rails g migration add_stats_to_participation attack:integer defense:integer speed:integer luck:integer unicycle:integer
-
-rails g migration make_battle_log_bot_empty_ok
-
-
-
-
-CONTROLLER GOOD
-
-  # BEGIN OF JOB
-  def perform
-    # @arena = Arena.find(arena_id)
+  def perform(arena_id)
+    @arena = Arena.find(arena_id)
     @participations = @arena.participations.where(is_alive: true).includes(:bot)
     @tiles = @arena.tiles
 
@@ -41,18 +12,19 @@ CONTROLLER GOOD
     @tiles.each do |tile|
       opponents = @participations.filter {|p| p.tile == tile}
       if opponents.size > 1
+        broadcast(nil, "👊🏻 Fated Duel begins!")
         @winners << fight_to_the_last_one_standing(opponents)
       elsif opponents.first.present?
         @winners << opponents.first
       end
     end
 
-    if @arena.battle_logs.count > 0 && @arena.battle_logs.count % 20 == 0 && @winners.count > 1
+    if @arena.battle_logs.count > 0 && @arena.battle_logs.count % 10 == 0 && @winners.count > 1
       lucky_ones = @winners.sample(2)
       bot_1 = lucky_ones.first.bot
       bot_2 = lucky_ones.second.bot
 
-      broadcast(nil, "💣Sudden Duel! 🔥 #{bot_1.name} vs #{bot_2.name} 🔥")
+      broadcast(nil, "💣 Sudden Duel! 🔥 #{bot_1.name} vs #{bot_2.name} 🔥")
       duel_winner = fight_to_the_last_one_standing(lucky_ones)
       loser = lucky_ones.detect {|p| p != duel_winner}
       @winners.reject {|p| p == loser}
@@ -97,9 +69,11 @@ CONTROLLER GOOD
           line = "All Stats + 50"
         end
 
-        broadcast(participation.bot, "I got #{pickup}! #{line}")
+        broadcast(participation.bot, "😃 Picked up #{pickup}! #{line}")
       end
     end
+
+    PlayGameJob.perform_now(@arena.id)
   end
 
   def fight_to_the_last_one_standing(participations)
@@ -133,7 +107,7 @@ CONTROLLER GOOD
       end
     end
 
-    broadcast(winner.bot, "#{winner.bot.catchphrase} -- Beat 'em all!")
+    broadcast(winner.bot, "#{winner.bot.catchphrase}")
     return winner
   end
 
@@ -147,8 +121,7 @@ CONTROLLER GOOD
   def broadcast(bot, message)
     BattleLog.create!(arena: @arena, bot: bot, message: message)
     @arena.broadcast_update
-    sleep 0.5
+    sleep 1
   end
+end
 
-  # END OF JOB
-  
