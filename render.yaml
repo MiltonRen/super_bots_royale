@@ -5,6 +5,13 @@ databases:
     plan: free
 
 services:
+  - type: redis
+    name: MARS-prod-redis
+    region: oregon
+    maxmemoryPolicy: noeviction
+    ipAllowList: [] # only allow internal connections
+    plan: free
+
   - type: web
     name: MARS-prod-web
     repo: https://github.com/MiltonRen/super_bots_royale
@@ -23,6 +30,11 @@ services:
         value: 2 # renduce memory usage, https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
       - key: WEB_CONCURRENCY
         value: 2
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: MARS-prod-redis
+          property: connectionString
     plan: starter
 
   - type: worker
@@ -40,4 +52,9 @@ services:
         sync: false
       - key: MALLOC_ARENA_MAX
         value: 2 # renduce memory usage, https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: MARS-prod-redis
+          property: connectionString
     plan: starter # no free option for bg workers
