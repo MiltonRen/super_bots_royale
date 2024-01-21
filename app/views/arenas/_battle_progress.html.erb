@@ -26,23 +26,19 @@
           <% end %>
         </div>
       <% else %>
-        2 bots are required for this game to start
-        <br>
-        How to join:
-        <br>
-        <br>
-        -> HOME
-        <br>
-        -> GO TO YOUR BOT OR MAKE A NEW ONE
-        <br>
-        -> CLICK "JOIN GAME"
-        <br>
-        (if you made a new bot, refresh the page until the image is generated for it!)
-        <br>
-        <br>
+        <p class="text-xl">
+          2 bots are required for this game to start. Add a bot or make a new one!
+          <br>
+          <br>
+          This game is sponsored by <a href="https://www.foreverse.org" target="_blank" class="bg-secondary underline hover:bg-primary transition duration-150">Foreverse</a>
+          <br>
+          ^ Build a temple on the internet while waiting for the game to start!
+          <br>
+          <br>
+        </p>
         
         <div class="mb-8">
-          <%= link_to bots_path, class: "btn btn-lg" do %>
+          <%= link_to bots_path, class: "btn btn-lg mb-4 sm:mb-0" do %>
             Add an existing bot
           <% end %>
           <%= link_to new_bot_path, class: "btn btn-lg" do %>
