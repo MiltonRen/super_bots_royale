@@ -7,7 +7,7 @@ databases:
 services:
   - type: web
     name: MARS-prod-web
-    repo: https://github.com/MiltonRen/temple
+    repo: https://github.com/MiltonRen/super_bots_royale
     runtime: ruby
     region: oregon
     buildCommand: "./bin/render-build.sh"
