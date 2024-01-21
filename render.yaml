@@ -30,7 +30,7 @@ services:
     runtime: ruby
     region: oregon
     buildCommand: "./bin/render-build.sh"
-    startCommand: bundle exec rake solid_queue:start -e production
+    startCommand: bundle exec rake solid_queue:start
     envVars:
       - key: DATABASE_URL
         fromDatabase:
