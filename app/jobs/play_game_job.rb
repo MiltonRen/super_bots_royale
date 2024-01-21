@@ -40,7 +40,7 @@ class PlayGameJob < ApplicationJob
       next_tile = @tiles.detect{|t| t.number == next_tile_number}
       participation.update!(tile: next_tile)
     end
-    broadcast(nil, "End of turn! All alive bots moved one block")
+    broadcast(nil, "All bots moved one block!")
 
     @winners.each do |participation|
       pickup = participation.tile.item

@@ -10,6 +10,8 @@
     <% if @bot.image_link.present? %>
       <%= image_tag @bot.image_link, class: "w-full" %>
     <% else %>
+      <p class="bg-base-200 animate-pulse">Creating your bot on EDEN... REFRESH Browser window to check if bot is ready!</p>
+
       <div class="w-full h-full flex justify-center items-center">
         <i class="fa-solid fa-spinner text-[12rem] animate-spin text-primary"></i>
       </div>

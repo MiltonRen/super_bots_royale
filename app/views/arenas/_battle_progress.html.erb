@@ -65,8 +65,12 @@
     </div>
 
     <div class="p-4">
-      <% logs = arena.battle_logs.order(id: :desc).first(24) %>
-      
+      <% if arena.concluded? %>
+        <% logs = arena.battle_logs.all.order(id: :desc) %>
+      <% else %>
+        <% logs = arena.battle_logs.order(id: :desc).first(24) %>
+      <% end %>
+
       <% if logs.first&.message&.include?("😃 Picked up") %>
         <div data-controller="acquire"></div>
       <% end %>
@@ -97,6 +101,8 @@
       <% if arena.started? %>
         <% if logs.blank? %>
           <p class="text-xl ml-2">Game starting in a few seconds...</p>
+        <% elsif arena.concluded? %>
+          <p class="text-xl ml-2 opacity-50">battle begins!</p>          
         <% else %>
           <p class="text-xl ml-2">...</p>          
         <% end %>      
@@ -105,7 +111,7 @@
   </div>
 
   <% if arena.concluded? %>
-    <div data-controller="reward-animator" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div data-controller="reward-animator" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <%= link_to root_path, class: "btn btn-lg btn-primary text-5xl z-50 h-32 w-64 text-white" do %>
         < HOME
       <% end %>
