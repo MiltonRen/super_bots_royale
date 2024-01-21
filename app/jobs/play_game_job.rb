@@ -1,6 +1,30 @@
 class PlayGameJob < ApplicationJob
   include Gptable
 
+  PEACE_LINES = [
+    "All bots moved one block!",
+    "A peaceful turn...",
+    "Throwing dices...",
+  ]
+
+  WEIRD_LINES = [
+    "Moonwalked penguins organize disco parties on Mars!",
+    "Where are the Jellybean factories?",
+    "Hosting speed-dating events for snails in hidden gardens...",
+    "Marshmallow ninja karate!",
+    "Did you know it’s illegal to feed pigeons on the sidewalks and streets of San Francisco?",
+    "Did you know an astronaut was allergic to the moon?",
+    "Did you know there’s a toilet museum?",
+    "Did you know it would cost $18.3 million to make a replica Darth Vader suit?",
+    "Did you know your liver's size fluctuates significantly throughout the day?",
+    "Did you know the youngest Olympian was 10 years old?",
+    "Did you know there's a planet that's shaped like a potato?",
+    "Did you know the Twitter bird has a name?",
+    "Did you know it's illegal to own just one guinea pig in Switzerland?",
+    "Did you know there's a Starbucks cup in every shot in Fight Club?",
+    "Did you know ancient cats once led to the extinction of ancient dogs?",
+  ]
+
   queue_as :default
 
   def perform(arena_id)
@@ -40,7 +64,13 @@ class PlayGameJob < ApplicationJob
       next_tile = @tiles.detect{|t| t.number == next_tile_number}
       participation.update!(tile: next_tile)
     end
-    broadcast(nil, "All bots moved one block!")
+
+    line = if rand(1..100) <= 75
+      PEACE_LINES.sample
+    else
+      WEIRD_LINES.sample
+    end
+    broadcast(nil, line)
 
     @winners.each do |participation|
       pickup = participation.tile.item
