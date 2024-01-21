@@ -1,11 +1,21 @@
 <p style="color: green"><%= notice %></p>
 
+<dialog id="qr_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg text-center">Scan this code to join the game!</h3>
+    <%= image_tag "qr.png" %>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
 <div class="flex flex-col p-2">
   <i class="fa-solid fa-wifi text-5xl animate-pulse"></i>
   <i class="fa-solid fa-robot text-5xl -mt-2"></i>
 </div>
 
-<div class="mt-40">
+<div class="mt-40 w-fit hover:cursor-pointer hover:-translate-y-4 transition duration-150" onclick="qr_modal.showModal()">
   <h1 class="text-7xl">SUPER!</h1>
   <h1 class="text-7xl">MARS</h1>
   <h1 class="text-7xl mb-4">ROYALE</h1>

@@ -107,10 +107,11 @@
   </div>
 
   <% if arena.concluded? %>
-    <div data-controller="reward-animator" class="fixed left-4 bottom-4">
-      <%= link_to root_path, class: "btn btn-lg btn-primary text-5xl z-50 h-32 w-64 text-white" do %>
+    <div data-controller="reward-animator" class="fixed left-4 bottom-4 flex gap-x-4">
+      <%= link_to root_path, class: "btn btn-lg btn-primary text-4xl text-left z-50 h-32 w-48 text-white" do %>
         < HOME
       <% end %>
+      <a class="btn btn-accent text-2xl text-left z-50 h-32 w-48 animate-bounce" target="_blank" href="https://www.smoothie.fyi/s/tTvdF08MV7OlgdaqPlCK">Claim Exclusive Sticker</a>
     </div>
   <% end %>
 </div>
