@@ -23,7 +23,7 @@ class Tile < ApplicationRecord
   belongs_to :arena
 
   before_create do
-    self.bg = ["bg-base-100", "bg-base-200", "bg-base-200", "bg-base-200 bg-opacity-50", "bg-base-200 bg-opacity-50", "bg-base-200 bg-opacity-50"].sample
+    self.bg = ["bg-base-100 rounded-lg", "bg-base-200 rounded-lg"].sample
   end
 
   def neighbors
